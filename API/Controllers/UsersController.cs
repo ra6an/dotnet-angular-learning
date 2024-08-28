@@ -1,13 +1,14 @@
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class UsersController : ControllerBase 
+// MOZE SE NA OVOM LEVELU STAVITI [Authorize] da bi trazilo token na svim requestovima a sa [AllowAnonymous] dozvolimo pristup requestu bez tokena. ili pojedinacno stavljati [Authorize] na svaki request
+[Authorize]
+public class UsersController : BaseApiController 
 {
     private readonly DataContext _context;
 
@@ -16,6 +17,7 @@ public class UsersController : ControllerBase
         _context = context;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
