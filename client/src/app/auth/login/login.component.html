@@ -1,0 +1,31 @@
+<form
+  #loginForm="ngForm"
+  class="container d-flex flex-column justify-content-center align-items-center min-vh-100"
+  style="max-width: 600px"
+  (ngSubmit)="login()"
+  autocomplete="off"
+>
+  <div class="w-100 d-flex flex-column gap-4">
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="model.username"
+        class="form-control me-2"
+        placeholder="Username"
+      />
+    </div>
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control me-2"
+        placeholder="Password"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </div>
+</form>

@@ -1,0 +1,45 @@
+<div class="container-fluid border-bottom mb-4 fixed-top">
+  <header
+    class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
+  >
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <!-- <svg
+          class="bi"
+          width="40"
+          height="32"
+          role="img"
+          aria-label="Bootstrap"
+        >
+          <use xlink:href="#bootstrap"></use>
+        </svg> -->
+        Dating App
+      </a>
+    </div>
+
+    <ul
+      class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
+      *ngIf="loggedIn"
+    >
+      <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+      <li><a href="#" class="nav-link px-2">Matches</a></li>
+      <li><a href="#" class="nav-link px-2">Lists</a></li>
+      <li><a href="#" class="nav-link px-2">Messages</a></li>
+    </ul>
+
+    <div dropdown class="dropdown" *ngIf="loggedIn">
+      <a dropdownToggle class="dropdown-toggle test-light text-decoration-none"
+        >Welcome {{ username }}</a
+      >
+      <div *dropdownMenu class="dropdown-menu">
+        <a href="#" class="dropdown-item">Edit Profile</a>
+        <a href="#" (click)="logout()" class="dropdown-item">Logout</a>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-end" *ngIf="!loggedIn">
+      <button type="button" class="btn btn-outline-primary me-2">Login</button>
+      <button type="button" class="btn btn-primary">Sign-up</button>
+    </div>
+  </header>
+</div>

@@ -1,9 +1,13 @@
-﻿using System.Security.Cryptography;
+﻿using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,6 +65,28 @@ public class AccountController : BaseApiController
     return new UserDto{
       Username = user.UserName,
       Token = _tokenService.CreateToken(user)
+    };
+  }
+
+  [Authorize]
+  [HttpGet("me")]
+  public async Task<ActionResult<UserDto>> Me() {
+    var authHeader = Request.Headers["Authorization"].ToString();
+
+    if(authHeader == null && authHeader.StartsWith("Bearer ")) return Unauthorized("No token provided!");
+
+    ClaimsPrincipal decodedToken = _tokenService.ValidateToken(authHeader.Split(' ')[1]);
+    
+    var nameIdClaim = decodedToken.FindFirst("name");
+
+    if(nameIdClaim == null) return Unauthorized("You are not authorized!");
+
+    var nameId = nameIdClaim.Value;
+    var user = await _context.Users.Where(u => u.UserName == nameId).SingleOrDefaultAsync();
+
+    return new UserDto{
+      Username = user.UserName,
+      Token = authHeader
     };
   }
 
