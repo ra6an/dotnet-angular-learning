@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -10,13 +11,12 @@ export class LoginComponent {
   model: any = {};
   @Output() cancelLogin = new EventEmitter();
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
   login() {
     this.accountService.login(this.model).subscribe({
       next: (response) => {
-        console.log(response);
-        this.cancel();
+        this.router.navigateByUrl('/members');
       },
       error: (err) => console.log(err),
     });
@@ -27,7 +27,7 @@ export class LoginComponent {
   }
 
   logout() {
-    // this.loggedIn = false;
     this.accountService.setLoggedIn(false);
+    this.router.navigateByUrl('/');
   }
 }

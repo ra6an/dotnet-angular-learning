@@ -3,7 +3,11 @@
     class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
   >
     <div class="col-md-1 mb-2 mb-md-0">
-      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        class="d-inline-flex link-body-emphasis text-decoration-none"
+      >
         <!-- <svg
           class="bi"
           width="40"
@@ -21,10 +25,32 @@
       class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
       *ngIf="accountService.currUserSubject$ | async"
     >
-      <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-      <li><a href="#" class="nav-link px-2">Matches</a></li>
-      <li><a href="#" class="nav-link px-2">Lists</a></li>
-      <li><a href="#" class="nav-link px-2">Messages</a></li>
+      <li>
+        <a
+          routerLink="/"
+          class="nav-link px-2 link-secondary"
+          routerLinkActive="active"
+          >Home</a
+        >
+      </li>
+      <li>
+        <a routerLink="/members" class="nav-link px-2" routerLinkActive="active"
+          >Matches</a
+        >
+      </li>
+      <li>
+        <a routerLinkActive="active" routerLink="/lists" class="nav-link px-2"
+          >Lists</a
+        >
+      </li>
+      <li>
+        <a
+          routerLinkActive="active"
+          routerLink="/messages"
+          class="nav-link px-2"
+          >Messages</a
+        >
+      </li>
     </ul>
 
     <div
@@ -36,8 +62,19 @@
         >Welcome {{ accountService.getUsername() }}</a
       >
       <div *dropdownMenu class="dropdown-menu">
-        <a href="#" class="dropdown-item">Edit Profile</a>
-        <a href="#" (click)="logout()" class="dropdown-item">Logout</a>
+        <a
+          routerLinkActive="active"
+          routerLink="/edit-profile"
+          class="dropdown-item"
+          >Edit Profile</a
+        >
+        <a
+          routerLinkActive="active"
+          routerLink="/"
+          (click)="logout()"
+          class="dropdown-item"
+          >Logout</a
+        >
       </div>
     </div>
 

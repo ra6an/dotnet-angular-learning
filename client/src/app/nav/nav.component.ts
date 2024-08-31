@@ -12,14 +12,7 @@ export class NavComponent {
 
   constructor(public accountService: AccountService) {}
 
-  ngOnInit(): void {
-    // this.accountService.loggedIn$.subscribe((loggedIn: boolean) => {
-    //   this.loggedIn = loggedIn;
-    // });
-    // this.accountService.username$.subscribe((username: string) => {
-    //   this.username = username;
-    // });
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.accountService.logout();

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class SignupComponent {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -18,7 +19,8 @@ export class SignupComponent {
     // this.accountService.register(this.model);
     this.accountService.register(this.model).subscribe({
       next: () => {
-        this.cancel();
+        this.router.navigateByUrl('/members');
+        // this.cancel();
       },
       error: (err) => console.log(err),
     });
