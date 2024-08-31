@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { User } from 'src/app/_models/user';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -9,20 +8,22 @@ import { AccountService } from 'src/app/_services/account.service';
 })
 export class LoginComponent {
   model: any = {};
-  // loggedIn = false;
+  @Output() cancelLogin = new EventEmitter();
 
   constructor(private accountService: AccountService) {}
 
   login() {
-    this.accountService.login(this.model);
-    // this.accountService.login(this.model).subscribe({
-    //   next: (response: User) => {
-    //     console.log(response);
-    //     this.accountService.setUsername(response.username);
-    //     this.accountService.setLoggedIn(true);
-    //   },
-    //   error: (err) => console.log(err),
-    // });
+    this.accountService.login(this.model).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.cancel();
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
+  cancel() {
+    this.cancelLogin.emit(false);
   }
 
   logout() {

@@ -12,7 +12,7 @@ import { map } from 'rxjs';
 export class AppComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/';
   title = 'Dating App';
-  users: any;
+  // users: any;
 
   constructor(
     private http: HttpClient,
@@ -20,16 +20,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getUsers();
     this.setCurrentUser();
-  }
-
-  getUsers() {
-    this.http.get(`${this.baseUrl}users`).subscribe({
-      next: (res) => (this.users = res),
-      error: (err) => console.log(err),
-      complete: () => console.log('Request has completed.'),
-    });
   }
 
   setCurrentUser() {

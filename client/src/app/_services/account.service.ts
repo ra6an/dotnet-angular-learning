@@ -19,20 +19,55 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
   login(model: any) {
-    console.log('TESTIRAMO: ', model);
-    this.http.post<User>(this.baseUrl + 'account/login', model).subscribe({
-      next: (res: User) => {
-        const user = res;
-        // console.log(user);
+    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+      map((response: User) => {
+        const user = response;
         if (user) {
           this.usernameSubject.next(user.username);
           this.loggedInSubject.next(true);
           this.currUserSubject.next(user);
           localStorage.setItem('token', JSON.stringify(user.token));
         }
-      },
-      error: (err) => console.log(err),
-    });
+      })
+    );
+    // this.http.post<User>(this.baseUrl + 'account/login', model).subscribe({
+    //   next: (res: User) => {
+    //     const user = res;
+    //     if (user) {
+    //       this.usernameSubject.next(user.username);
+    //       this.loggedInSubject.next(true);
+    //       this.currUserSubject.next(user);
+    //       localStorage.setItem('token', JSON.stringify(user.token));
+    //     }
+    //   },
+    //   error: (err) => console.log(err),
+    // });
+  }
+
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map((user) => {
+        if (user) {
+          this.usernameSubject.next(user.username);
+          this.loggedInSubject.next(true);
+          this.currUserSubject.next(user);
+          localStorage.setItem('token', JSON.stringify(user.token));
+        }
+        return user;
+      })
+    );
+    // this.http.post<User>(this.baseUrl + 'account/register', model).subscribe({
+    //   next: (res: User) => {
+    //     const user = res;
+    //     if (user) {
+    //       this.usernameSubject.next(user.username);
+    //       this.loggedInSubject.next(true);
+    //       this.currUserSubject.next(user);
+    //       localStorage.setItem('token', JSON.stringify(user.token));
+    //     }
+    //   },
+    //   error: (err) => console.log(err),
+    // });
   }
 
   getUserData(token: string) {

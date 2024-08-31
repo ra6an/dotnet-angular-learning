@@ -2,7 +2,7 @@
   <header
     class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3"
   >
-    <div class="col-md-3 mb-2 mb-md-0">
+    <div class="col-md-1 mb-2 mb-md-0">
       <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
         <!-- <svg
           class="bi"
@@ -19,7 +19,7 @@
 
     <ul
       class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
-      *ngIf="loggedIn"
+      *ngIf="accountService.currUserSubject$ | async"
     >
       <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
       <li><a href="#" class="nav-link px-2">Matches</a></li>
@@ -27,9 +27,13 @@
       <li><a href="#" class="nav-link px-2">Messages</a></li>
     </ul>
 
-    <div dropdown class="dropdown" *ngIf="loggedIn">
+    <div
+      dropdown
+      class="dropdown"
+      *ngIf="accountService.currUserSubject$ | async"
+    >
       <a dropdownToggle class="dropdown-toggle test-light text-decoration-none"
-        >Welcome {{ username }}</a
+        >Welcome {{ accountService.getUsername() }}</a
       >
       <div *dropdownMenu class="dropdown-menu">
         <a href="#" class="dropdown-item">Edit Profile</a>
@@ -37,7 +41,10 @@
       </div>
     </div>
 
-    <div class="col-md-3 text-end" *ngIf="!loggedIn">
+    <div
+      class="col-md-3 text-end"
+      *ngIf="!(accountService.currUserSubject$ | async)"
+    >
       <button type="button" class="btn btn-outline-primary me-2">Login</button>
       <button type="button" class="btn btn-primary">Sign-up</button>
     </div>

@@ -1,8 +1,17 @@
 <app-nav></app-nav>
 
-<!-- <div class="container" style="margin-top: 90px"></div> -->
-
-<app-login></app-login>
+<div
+  class="container d-flex flex-grow"
+  style="
+    margin-top: 90px;
+    min-height: calc(100vh - 90px);
+    align-items: stretch;
+    justify-content: stretch;
+  "
+>
+  <app-home class="w-100"></app-home>
+  <!-- <app-login style="width: 100%"></app-login> -->
+</div>
 
 <!-- <ul>
   <li *ngFor="let user of users">{{ user.id }} = {{ user.userName }}</li>

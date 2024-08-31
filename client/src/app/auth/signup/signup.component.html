@@ -1,1 +1,55 @@
-<p>signup works!</p>
+<form
+  #registerForm="ngForm"
+  class="container d-flex flex-column justify-content-center align-items-center"
+  style="max-width: 600px; height: 100%; width: 100%; align-self: center"
+  (ngSubmit)="register()"
+  autocomplete="off"
+>
+  <h2>Sign Up</h2>
+  <hr />
+  <div class="w-100 d-flex flex-column gap-2">
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="model.username"
+        class="form-control me-2"
+        placeholder="Username"
+      />
+    </div>
+    <div class="d-flex flex-column gap-1">
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control me-2"
+        placeholder="Password"
+      />
+    </div>
+    <!-- <div class="d-flex flex-column gap-1">
+      <label htmlFor="password-confirm">Confirm Password</label>
+      <input
+        type="password"
+        name="password-confirm"
+        [(ngModel)]="model.passwordConfirm"
+        class="form-control me-2"
+        placeholder="Confirm Password"
+      />
+    </div> -->
+    <div class="d-flex gap-1" style="margin-top: 20px">
+      <button type="submit" class="btn btn-primary me-2" style="width: 50%">
+        Register
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="btn btn-outline-primary"
+        style="width: 50%"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

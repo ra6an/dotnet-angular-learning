@@ -1,10 +1,12 @@
 <form
   #loginForm="ngForm"
-  class="container d-flex flex-column justify-content-center align-items-center min-vh-100"
-  style="max-width: 600px"
+  class="container d-flex flex-column justify-content-center align-items-center"
+  style="max-width: 600px; height: 100%; width: 100%; align-self: center"
   (ngSubmit)="login()"
   autocomplete="off"
 >
+  <h2>Login</h2>
+  <hr />
   <div class="w-100 d-flex flex-column gap-4">
     <div class="d-flex flex-column gap-1">
       <label htmlFor="username">Username</label>
@@ -26,6 +28,19 @@
         placeholder="Password"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <div class="d-flex gap-1" style="margin-top: 20px">
+      <button type="submit" class="btn btn-primary me-2" style="width: 50%">
+        Login
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="btn btn-outline-primary"
+        style="width: 50%"
+      >
+        Cancel
+      </button>
+    </div>
+    <!-- <button type="submit" class="btn btn-primary">Login</button> -->
   </div>
 </form>

@@ -1,0 +1,30 @@
+<div
+  class="container d-flex w-100 h-100 align-items-center justify-content-center"
+>
+  <div class="text-align-center" *ngIf="!(registerMode || loginMode)">
+    <h1>Find your match</h1>
+    <p class="lead">
+      Come on in to view your matches... all you need to do is sign up!
+    </p>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg me-2" (click)="registerToggle()">
+        Register
+      </button>
+      <button class="btn btn-outline-primary btn-lg" (click)="loginToggle()">
+        Login
+      </button>
+    </div>
+  </div>
+  <div class="container w-100" *ngIf="registerMode">
+    <app-signup
+      (cancelRegister)="cancleRegisterToggle($event)"
+      class="w-100"
+    ></app-signup>
+  </div>
+  <div class="container w-100" *ngIf="loginMode">
+    <app-login
+      (cancelLogin)="cancleLoginToggle($event)"
+      class="w-100"
+    ></app-login>
+  </div>
+</div>
