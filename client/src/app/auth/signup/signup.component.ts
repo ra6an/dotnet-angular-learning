@@ -26,9 +26,6 @@ export class SignupComponent {
         this.router.navigateByUrl('/members');
         this.toastr.success('You created account successfully.');
       },
-      error: (err) => {
-        this.toastr.error(err.error);
-      },
     });
   }
 
