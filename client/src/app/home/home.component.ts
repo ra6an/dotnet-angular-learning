@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+// import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -7,16 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  baseUrl = 'https://localhost:5001/api/';
+  // baseUrl = environment.apiUrl;
   registerMode = false;
   loginMode = false;
   users: any;
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
+  ngOnInit(): void {}
 
   registerToggle() {
     this.registerMode = !this.registerMode;
@@ -32,13 +31,5 @@ export class HomeComponent {
 
   cancleLoginToggle(event: boolean) {
     this.loginMode = event;
-  }
-
-  getUsers() {
-    this.http.get(`${this.baseUrl}users`).subscribe({
-      next: (res) => (this.users = res),
-      error: (err) => console.log(err),
-      complete: () => console.log('Request has completed.'),
-    });
   }
 }

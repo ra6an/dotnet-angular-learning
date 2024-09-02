@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../_models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   private loggedInSubject = new BehaviorSubject<boolean>(false);
   private usernameSubject = new BehaviorSubject<string>('');
   private currUserSubject = new BehaviorSubject<User | null>(null);
@@ -30,18 +31,6 @@ export class AccountService {
         }
       })
     );
-    // this.http.post<User>(this.baseUrl + 'account/login', model).subscribe({
-    //   next: (res: User) => {
-    //     const user = res;
-    //     if (user) {
-    //       this.usernameSubject.next(user.username);
-    //       this.loggedInSubject.next(true);
-    //       this.currUserSubject.next(user);
-    //       localStorage.setItem('token', JSON.stringify(user.token));
-    //     }
-    //   },
-    //   error: (err) => console.log(err),
-    // });
   }
 
   register(model: any) {
@@ -56,18 +45,6 @@ export class AccountService {
         return user;
       })
     );
-    // this.http.post<User>(this.baseUrl + 'account/register', model).subscribe({
-    //   next: (res: User) => {
-    //     const user = res;
-    //     if (user) {
-    //       this.usernameSubject.next(user.username);
-    //       this.loggedInSubject.next(true);
-    //       this.currUserSubject.next(user);
-    //       localStorage.setItem('token', JSON.stringify(user.token));
-    //     }
-    //   },
-    //   error: (err) => console.log(err),
-    // });
   }
 
   getUserData(token: string) {
