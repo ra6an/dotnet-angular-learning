@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
 
     this.http.get<User>(`${this.baseUrl}account/me`, { headers }).subscribe({
       next: (res: User) => {
+        console.log(res);
         this.accountService.setLoggedIn(true);
         this.accountService.setUsername(res.username);
         this.accountService.setCurrentUser(res);

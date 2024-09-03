@@ -13,28 +13,28 @@ export class MembersService {
 
   getMembers() {
     return this.http.get<Member[]>(
-      `${this.baseUrl}users`,
-      this.getHttpOptions()
+      `${this.baseUrl}users`
+      // this.getHttpOptions()
     );
   }
 
   getMember(username: string) {
     return this.http.get<Member>(
-      `${this.baseUrl}users/${username}`,
-      this.getHttpOptions()
+      `${this.baseUrl}users/${username}`
+      // this.getHttpOptions()
     );
   }
 
-  getHttpOptions() {
-    const tokenString = localStorage.getItem('token');
-    if (!tokenString) return;
+  // getHttpOptions() {
+  //   const tokenString = localStorage.getItem('token');
+  //   if (!tokenString) return;
 
-    const token = JSON.parse(tokenString);
+  //   const token = JSON.parse(tokenString);
 
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-      }),
-    };
-  }
+  //   return {
+  //     headers: new HttpHeaders({
+  //       Authorization: `Bearer ${token}`,
+  //     }),
+  //   };
+  // }
 }

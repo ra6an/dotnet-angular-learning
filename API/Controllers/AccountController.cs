@@ -15,19 +15,19 @@ namespace API.Controllers;
 
 public class AccountController : BaseApiController
 {
-    private readonly DataContext _context;
-    private readonly ITokenService _tokenService;
+  private readonly DataContext _context;
+  private readonly ITokenService _tokenService;
 
-    public AccountController(DataContext context, ITokenService tokenService)
-    {
-        _context = context;
-        _tokenService = tokenService;
-    }
+  public AccountController(DataContext context, ITokenService tokenService)
+  {
+    _context = context;
+    _tokenService = tokenService;
+  }
 
   [HttpPost("register")]
-  public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) 
+  public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
   {
-    if(await UserExists(registerDto.Username)) return BadRequest("Username is taken.");
+    if (await UserExists(registerDto.Username)) return BadRequest("Username is taken.");
 
     using var hmac = new HMACSHA512();
 
@@ -41,7 +41,8 @@ public class AccountController : BaseApiController
     _context.Users.Add(user);
     await _context.SaveChangesAsync();
 
-    return new UserDto{
+    return new UserDto
+    {
       Username = user.UserName,
       Token = _tokenService.CreateToken(user)
     };
@@ -58,11 +59,13 @@ public class AccountController : BaseApiController
 
     var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
-    for(int i =0; i < computedHash.Length; i++) {
-      if(computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password!");
+    for (int i = 0; i < computedHash.Length; i++)
+    {
+      if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password!");
     }
 
-    return new UserDto{
+    return new UserDto
+    {
       Username = user.UserName,
       Token = _tokenService.CreateToken(user)
     };
@@ -70,27 +73,31 @@ public class AccountController : BaseApiController
 
   [Authorize]
   [HttpGet("me")]
-  public async Task<ActionResult<UserDto>> Me() {
+  public async Task<ActionResult<UserDto>> Me()
+  {
     var authHeader = Request.Headers["Authorization"].ToString();
 
-    if(authHeader == null && authHeader.StartsWith("Bearer ")) return Unauthorized("No token provided!");
+    if (authHeader == null && authHeader.StartsWith("Bearer ")) return Unauthorized("No token provided!");
 
-    ClaimsPrincipal decodedToken = _tokenService.ValidateToken(authHeader.Split(' ')[1]);
-    
+    string _token = authHeader.Split(" ")[1];
+
+    ClaimsPrincipal decodedToken = _tokenService.ValidateToken(_token);
+
     var nameIdClaim = decodedToken.FindFirst("name");
 
-    if(nameIdClaim == null) return Unauthorized("You are not authorized!");
+    if (nameIdClaim == null) return Unauthorized("You are not authorized!");
 
     var nameId = nameIdClaim.Value;
     var user = await _context.Users.Where(u => u.UserName == nameId).SingleOrDefaultAsync();
 
-    return new UserDto{
+    return new UserDto
+    {
       Username = user.UserName,
-      Token = authHeader
+      Token = _token
     };
   }
 
-  private async Task<bool> UserExists(string username) 
+  private async Task<bool> UserExists(string username)
   {
     return await _context.Users.AnyAsync(user => user.UserName == username.ToLower());
   }
